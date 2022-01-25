@@ -95,17 +95,18 @@ There are two things you can do about this warning:
 
 
 
-(defun generate-banner (name time file-name space comment-delimiter line-length)
+(defun generate-banner (name time file-name pre-delimiter-space comment-delimiter line-length)
   "Generate a banner given a list of parameters."
   (interactive)
-  
-  (defvar line (make-string (- line-length 2 (length space)) ?-))
-  (insert space comment-delimiter " " line)
-  (insert "\n" space comment-delimiter " Created by " name " on " time)
-  (insert "\n" space comment-delimiter)
-  (insert "\n" space comment-delimiter " " file-name)
-  (insert "\n" space comment-delimiter)
-  (insert "\n" space comment-delimiter " " line "\n"))
+
+  (defvar modified-length (- line-length (+ (length comment-delimiter) (length pre-delimiter-space))))
+  (defvar line (make-string modified-length ?-))
+  (insert pre-delimiter-space comment-delimiter " " line)
+  (insert "\n" pre-delimiter-space comment-delimiter " Created by " name " on " time)
+  (insert "\n" pre-delimiter-space comment-delimiter)
+  (insert "\n" pre-delimiter-space comment-delimiter " " file-name)
+  (insert "\n" pre-delimiter-space comment-delimiter)
+  (insert "\n" pre-delimiter-space comment-delimiter " " line "\n"))
 
 
 (defun c-banner ()
