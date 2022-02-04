@@ -145,15 +145,27 @@ There are two things you can do about this warning:
     (generate-banner "Ulysses Carlos" time-stamp file-name "" "#" line-count)))
 
 
-(defun bash-banner ()
-  "Create a banner for .sh files with an appropriate shebang."
-    (interactive)
-    (insert "#~/bin/bash\n")
-    (py-banner))
+
+(defun check-bash-banner ()
+  "Print a bash shebang and banner on an empty .sh file."
+  (let ((current-size 0))
+    (setq current-size (buffer-size)) ;; Assign current-size
+    (when (= current-size 0)
+      (insert "#!/bin/bash\n")
+      (py-banner))))
 
 
 (defun check-py-banner ()
-  "Only print a banner on an empty Python file."
+  "Print an banner on an empty python file."
+  (let ((current-size 0))
+    (setq current-size (buffer-size)) ;; Assign current-size
+    (when (= current-size 0)
+      (insert "#!/usr/bin/env python3\n")
+      (py-banner))))
+
+
+(defun check-py-like-banner ()
+  "Only print a banner on an empty file that has python-like commenting without a shebang."
 					; Get size of buffer:
   ;; (interactive)
   (let ((current-size 0))
@@ -203,8 +215,8 @@ There are two things you can do about this warning:
 
 ;; Python-like commenting
 (add-hook 'python-mode-hook 'check-py-banner)
-(add-hook 'ruby-mode-hook 'check-py-banner) ;; Ruby allows for python-like commenting
-(add-hook 'sh-mode-hook 'check-py-banner)
+(add-hook 'ruby-mode-hook 'check-py-like-banner) ;; Ruby allows for python-like commenting
+(add-hook 'sh-mode-hook 'check-bash-banner)
 
 
 ;; Lisp-like commenting
