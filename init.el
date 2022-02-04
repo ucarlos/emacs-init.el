@@ -145,6 +145,13 @@ There are two things you can do about this warning:
     (generate-banner "Ulysses Carlos" time-stamp file-name "" "#" line-count)))
 
 
+(defun bash-banner ()
+  "Create a banner for .sh files with an appropriate shebang."
+    (interactive)
+    (insert "#~/bin/bash\n")
+    (py-banner))
+
+
 (defun check-py-banner ()
   "Only print a banner on an empty Python file."
 					; Get size of buffer:
